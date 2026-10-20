@@ -112,26 +112,20 @@ document.getElementById("resetMap").addEventListener("click", () => {
   }
 });
 
+
+
 document.getElementById("fullscreenButton").addEventListener("click", async () => {
-  const mapElement = document.getElementById("map");
+  const container = document.getElementById("mapFullscreenContainer");
 
   try {
     if (!document.fullscreenElement) {
-      await mapElement.requestFullscreen();
+      await container.requestFullscreen();
     } else {
       await document.exitFullscreen();
     }
-
-    setTimeout(() => {
-      if (map) {
-        map.invalidateSize();
-        if (mapBounds) {
-          map.fitBounds(mapBounds);
-        }
-      }
-    }, 200);
   } catch (error) {
-    alert("全画面表示にできませんでした。ブラウザーの設定をご確認ください。");
+    console.error("全画面表示エラー:", error);
+    alert("全画面表示にできませんでした。");
   }
 });
 
@@ -140,5 +134,5 @@ document.addEventListener("fullscreenchange", () => {
     if (map) {
       map.invalidateSize();
     }
-  }, 200);
+  }, 300);
 });
